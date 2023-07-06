@@ -1,33 +1,10 @@
-import {
-  AnswerPollDocument,
-  GetPollDocument,
-} from "@/components/documents.generated";
 import { Poll } from "@/components/poll";
-import { useMutation, useQuery } from "@apollo/client";
 import clsx from "clsx";
 import { Space_Grotesk } from "next/font/google";
+import Link from "next/link";
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export default function Home() {
-  // ignoring error for now, as this is a demo
-
-  const { data } = useQuery(GetPollDocument, {
-    variables: {
-      id: "1",
-    },
-  });
-
-  const [vote, { loading }] = useMutation(AnswerPollDocument);
-
-  const handleVote = async (answerId: string) => {
-    await vote({
-      variables: {
-        pollId: "1",
-        answerId,
-      },
-    });
-  };
-
   return (
     <div
       className={clsx(
@@ -42,11 +19,9 @@ export default function Home() {
           </h1>
         </header>
 
-        {data?.poll ? (
-          <Poll onClick={handleVote} poll={data.poll} loading={loading} />
-        ) : (
-          <div>loading</div>
-        )}
+        <Link href="/1" className="text-2xl underline underline-offset-2">
+          Poll 1
+        </Link>
       </main>
     </div>
   );
